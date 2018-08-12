@@ -2,6 +2,7 @@ import os
 import shutil
 import glob
 
+
 def copyData(srcFolder, trainFolder, numTrain, valFolder, numVal):
     srcFiles = os.listdir(srcFolder)
     os.mkdir(trainFolder)
@@ -16,18 +17,18 @@ def copyData(srcFolder, trainFolder, numTrain, valFolder, numVal):
         shutil.copy(srcFile, dstFile)
 
 
-trainCat = 'small/train/cat'
-trainDog = 'small/train/dog'
-valCat = 'small/val/cat'
-valDog = 'small/val/dog'
+prefix = 'mid'
+numTrain = 5000
+numVal = 1000
+
+trainCat = prefix + '/train/cat'
+trainDog = prefix + '/train/dog'
+valCat = prefix + '/val/cat'
+valDog = prefix + '/val/dog'
 os.makedirs(trainCat, exist_ok=True)
 os.makedirs(trainDog, exist_ok=True)
 os.makedirs(valCat, exist_ok=True)
 os.makedirs(valDog, exist_ok=True)
-
-numTrain = 1000
-numVal = 400
-
 
 def copyImages(src, dstTrain, numTrain, dstVal, numVal):
     for i in range(numTrain):
@@ -42,8 +43,8 @@ def copyImages(src, dstTrain, numTrain, dstVal, numVal):
         shutil.copy(srcFile, dstFile)
 
 
-# catImages = glob.glob('train\\cat*.jpg')
-# copyImages(catImages, trainCat, numTrain, valCat, numVal)
+catImages = glob.glob('train\\cat*.jpg')
+copyImages(catImages, trainCat, numTrain, valCat, numVal)
 
 dogImages = glob.glob('train\\dog*.jpg')
 copyImages(dogImages, trainDog, numTrain, valDog, numVal)

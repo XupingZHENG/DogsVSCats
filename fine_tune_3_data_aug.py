@@ -1,10 +1,11 @@
+import os
 import numpy as np
 import matplotlib.pyplot as plt
 import keras
 from keras.preprocessing.image import ImageDataGenerator, load_img
 
-train_dir = './small/train'
-validation_dir = './small/val'
+train_dir = './total/train'
+validation_dir = './total/val'
 image_size = 224
 
 from keras.applications import VGG16
@@ -51,8 +52,8 @@ train_datagen = ImageDataGenerator(
 validation_datagen = ImageDataGenerator(rescale=1./255)
 
 # Change the batchsize according to your system RAM
-train_batchsize = 50
-val_batchsize = 10
+train_batchsize = 100
+val_batchsize = 50
 
 # Data Generator for Training data
 train_generator = train_datagen.flow_from_directory(
@@ -60,6 +61,8 @@ train_generator = train_datagen.flow_from_directory(
         target_size=(image_size, image_size),
         batch_size=train_batchsize,
         class_mode='categorical')
+print('train_generator\'s class indices:')
+print(train_generator.class_indices)
 
 # Data Generator for Validation data
 validation_generator = validation_datagen.flow_from_directory(
@@ -68,6 +71,9 @@ validation_generator = validation_datagen.flow_from_directory(
         batch_size=val_batchsize,
         class_mode='categorical',
         shuffle=False)
+print('validation_generator\'s class indices:')
+print(validation_generator.class_indices)
+# exit()
 
 # Compile the model
 model.compile(loss='categorical_crossentropy',
@@ -85,7 +91,7 @@ history = model.fit_generator(
       verbose=1)
 
 # Save the Model
-model.save('da_last4_layers.h5')
+model.save('total_da_last4_layers.h5')
 
 # Plot the accuracy and loss curves
 acc = history.history['acc']
@@ -137,6 +143,8 @@ predicted_classes = np.argmax(predictions, axis=1)
 errors = np.where(predicted_classes != ground_truth)[0]
 print("No of errors = {}/{}".format(len(errors), validation_generator.samples))
 
+error_dir = 'error'
+os.makedirs(error_dir)
 # Show the errors
 for i in range(len(errors)):
     pred_class = np.argmax(predictions[errors[i]])
@@ -152,4 +160,5 @@ for i in range(len(errors)):
     plt.axis('off')
     plt.title(title)
     plt.imshow(original)
-    plt.show()
+    # plt.show()
+    plt.savefig('{}/{}.png'.format(error_dir, i))

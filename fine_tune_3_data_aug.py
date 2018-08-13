@@ -7,7 +7,7 @@ from keras import callbacks
 
 train_dir = './total/train'
 validation_dir = './total/val'
-save_dir = './result-sgd'
+save_dir = './result-adam'
 image_size = 224
 
 os.makedirs(save_dir, exist_ok=True)
@@ -82,16 +82,17 @@ print(validation_generator.class_indices)
 # Select optimizer
 sgd = optimizers.SGD(lr=0.001, decay=1e-4, momentum=0.9, nesterov=True)
 rms_prop = optimizers.RMSprop(lr=1e-4)
+adam = optimizers.adam(lr=0.0001)
 
 # Compile the model
 model.compile(loss='categorical_crossentropy',
-              optimizer=sgd,
+              optimizer=adam,
               metrics=['acc'])
 
 # Add callbacks
-save_model_cb = callbacks.ModelCheckpoint(os.path.join(save_dir, '{epoch:02d}.hdf5'), save_best_only=True, verbose=0)
+save_model_cb = callbacks.ModelCheckpoint(os.path.join(save_dir, '{epoch:02d}.hdf5'), save_best_only=True, verbose=1)
 log_cb = callbacks.CSVLogger(os.path.join(save_dir, 'log.csv'), append=True, separator=';')
-reduce_lr_cb = callbacks.ReduceLROnPlateau(monitor='val_loss', factor=0.5, patience=4)
+reduce_lr_cb = callbacks.ReduceLROnPlateau(monitor='val_loss', factor=0.5, patience=4, verbose=1)
 cbs = [save_model_cb, log_cb, reduce_lr_cb]
 
 # Train the Model

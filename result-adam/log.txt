@@ -1,0 +1,143 @@
+E:\Kaggle\DogsVSCats>python fine_tune_3_data_aug.py
+D:\anaconda3\lib\site-packages\h5py\__init__.py:36: FutureWarning: Conversion of the second argument of issubdtype from `float` to `np.floating` is deprecated. In future, it will be treated as `np.float64 == np.dtype(float).type`.
+  from ._conv import register_converters as _register_converters
+Using TensorFlow backend.
+2018-08-13 08:25:35.999444: I T:\src\github\tensorflow\tensorflow\core\platform\cpu_feature_guard.cc:140] Your CPU supports instructions that this TensorFlow binary was not compiled to use: AVX2
+2018-08-13 08:25:36.279656: I T:\src\github\tensorflow\tensorflow\core\common_runtime\gpu\gpu_device.cc:1356] Found device 0 with properties:
+name: GeForce GTX 1080 Ti major: 6 minor: 1 memoryClockRate(GHz): 1.6575
+pciBusID: 0000:01:00.0
+totalMemory: 11.00GiB freeMemory: 9.09GiB
+2018-08-13 08:25:36.283358: I T:\src\github\tensorflow\tensorflow\core\common_runtime\gpu\gpu_device.cc:1435] Adding visible gpu devices: 0
+2018-08-13 08:25:36.793386: I T:\src\github\tensorflow\tensorflow\core\common_runtime\gpu\gpu_device.cc:923] Device interconnect StreamExecutor with strength 1 edge matrix:
+2018-08-13 08:25:36.795629: I T:\src\github\tensorflow\tensorflow\core\common_runtime\gpu\gpu_device.cc:929]      0
+2018-08-13 08:25:36.797132: I T:\src\github\tensorflow\tensorflow\core\common_runtime\gpu\gpu_device.cc:942] 0:   N
+2018-08-13 08:25:36.798706: I T:\src\github\tensorflow\tensorflow\core\common_runtime\gpu\gpu_device.cc:1053] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 8804 MB memory) -> physical GPU (device: 0, name: GeForce GTX 1080 Ti, pci bus
+ id: 0000:01:00.0, compute capability: 6.1)
+<keras.engine.topology.InputLayer object at 0x000001E6DA4B1898> False
+<keras.layers.convolutional.Conv2D object at 0x000001E6E407F358> False
+<keras.layers.convolutional.Conv2D object at 0x000001E6DE241940> False
+<keras.layers.pooling.MaxPooling2D object at 0x000001E6E40A2EF0> False
+<keras.layers.convolutional.Conv2D object at 0x000001E6E40CAC18> False
+<keras.layers.convolutional.Conv2D object at 0x000001E6E40DCA20> False
+<keras.layers.pooling.MaxPooling2D object at 0x000001E6E40E7828> False
+<keras.layers.convolutional.Conv2D object at 0x000001E6E40FE4E0> False
+<keras.layers.convolutional.Conv2D object at 0x000001E6E40FEEB8> False
+<keras.layers.convolutional.Conv2D object at 0x000001E6E4112DA0> False
+<keras.layers.pooling.MaxPooling2D object at 0x000001E6E411CB00> False
+<keras.layers.convolutional.Conv2D object at 0x000001E6E4132588> False
+<keras.layers.convolutional.Conv2D object at 0x000001E6E413BCF8> False
+<keras.layers.convolutional.Conv2D object at 0x000001E6E4145EF0> False
+<keras.layers.pooling.MaxPooling2D object at 0x000001E6E4153BA8> False
+<keras.layers.convolutional.Conv2D object at 0x000001E6E4167630> True
+<keras.layers.convolutional.Conv2D object at 0x000001E6E4174F60> True
+<keras.layers.convolutional.Conv2D object at 0x000001E6E417CF60> True
+<keras.layers.pooling.MaxPooling2D object at 0x000001E6E4189C88> True
+_________________________________________________________________
+Layer (type)                 Output Shape              Param #
+=================================================================
+vgg16 (Model)                (None, 7, 7, 512)         14714688
+_________________________________________________________________
+flatten_1 (Flatten)          (None, 25088)             0
+_________________________________________________________________
+dense_1 (Dense)              (None, 1024)              25691136
+_________________________________________________________________
+dropout_1 (Dropout)          (None, 1024)              0
+_________________________________________________________________
+dense_2 (Dense)              (None, 2)                 2050
+=================================================================
+Total params: 40,407,874
+Trainable params: 32,772,610
+Non-trainable params: 7,635,264
+_________________________________________________________________
+Found 20000 images belonging to 2 classes.
+train_generator's class indices:
+{'cat': 0, 'dog': 1}
+Found 5000 images belonging to 2 classes.
+validation_generator's class indices:
+{'cat': 0, 'dog': 1}
+Epoch 1/40
+400/400 [==============================] - 515s 1s/step - loss: 0.1815 - acc: 0.9226 - val_loss: 0.0772 - val_acc: 0.9680
+Epoch 2/40
+400/400 [==============================] - 369s 923ms/step - loss: 0.0886 - acc: 0.9652 - val_loss: 0.0680 - val_acc: 0.9752
+Epoch 3/40
+400/400 [==============================] - 370s 924ms/step - loss: 0.0629 - acc: 0.9747 - val_loss: 0.0689 - val_acc: 0.9770
+Epoch 4/40
+400/400 [==============================] - 360s 900ms/step - loss: 0.0493 - acc: 0.9811 - val_loss: 0.0705 - val_acc: 0.9764
+Epoch 5/40
+400/400 [==============================] - 356s 890ms/step - loss: 0.0416 - acc: 0.9844 - val_loss: 0.0866 - val_acc: 0.9772
+Epoch 6/40
+400/400 [==============================] - 356s 890ms/step - loss: 0.0307 - acc: 0.9878 - val_loss: 0.0901 - val_acc: 0.9744
+Epoch 7/40
+400/400 [==============================] - 363s 907ms/step - loss: 0.0182 - acc: 0.9933 - val_loss: 0.0950 - val_acc: 0.9778
+Epoch 8/40
+400/400 [==============================] - 356s 889ms/step - loss: 0.0124 - acc: 0.9956 - val_loss: 0.1051 - val_acc: 0.9788
+Epoch 9/40
+400/400 [==============================] - 367s 918ms/step - loss: 0.0144 - acc: 0.9949 - val_loss: 0.1208 - val_acc: 0.9728
+Epoch 10/40
+400/400 [==============================] - 359s 897ms/step - loss: 0.0121 - acc: 0.9958 - val_loss: 0.0893 - val_acc: 0.9806
+Epoch 11/40
+400/400 [==============================] - 359s 898ms/step - loss: 0.0075 - acc: 0.9972 - val_loss: 0.0991 - val_acc: 0.9804
+Epoch 12/40
+400/400 [==============================] - 366s 916ms/step - loss: 0.0059 - acc: 0.9980 - val_loss: 0.0895 - val_acc: 0.9804
+Epoch 13/40
+400/400 [==============================] - 372s 930ms/step - loss: 0.0048 - acc: 0.9985 - val_loss: 0.1055 - val_acc: 0.9814
+Epoch 14/40
+400/400 [==============================] - 366s 914ms/step - loss: 0.0052 - acc: 0.9981 - val_loss: 0.1012 - val_acc: 0.9788
+Epoch 15/40
+400/400 [==============================] - 366s 916ms/step - loss: 0.0034 - acc: 0.9989 - val_loss: 0.1084 - val_acc: 0.9792
+Epoch 16/40
+400/400 [==============================] - 352s 881ms/step - loss: 0.0027 - acc: 0.9991 - val_loss: 0.1155 - val_acc: 0.9798
+Epoch 17/40
+400/400 [==============================] - 358s 895ms/step - loss: 0.0025 - acc: 0.9992 - val_loss: 0.1086 - val_acc: 0.9808
+Epoch 18/40
+400/400 [==============================] - 354s 885ms/step - loss: 0.0025 - acc: 0.9992 - val_loss: 0.1243 - val_acc: 0.9800
+Epoch 19/40
+400/400 [==============================] - 355s 888ms/step - loss: 0.0020 - acc: 0.9992 - val_loss: 0.1139 - val_acc: 0.9814
+Epoch 20/40
+400/400 [==============================] - 361s 902ms/step - loss: 0.0020 - acc: 0.9993 - val_loss: 0.1135 - val_acc: 0.9824
+Epoch 21/40
+400/400 [==============================] - 356s 889ms/step - loss: 0.0018 - acc: 0.9993 - val_loss: 0.1160 - val_acc: 0.9814
+Epoch 22/40
+400/400 [==============================] - 356s 890ms/step - loss: 0.0014 - acc: 0.9995 - val_loss: 0.1187 - val_acc: 0.9820
+Epoch 23/40
+400/400 [==============================] - 359s 897ms/step - loss: 0.0016 - acc: 0.9994 - val_loss: 0.1151 - val_acc: 0.9826
+Epoch 24/40
+400/400 [==============================] - 358s 894ms/step - loss: 0.0014 - acc: 0.9996 - val_loss: 0.1188 - val_acc: 0.9820
+Epoch 25/40
+400/400 [==============================] - 356s 889ms/step - loss: 0.0013 - acc: 0.9997 - val_loss: 0.1199 - val_acc: 0.9806
+Epoch 26/40
+400/400 [==============================] - 365s 912ms/step - loss: 0.0013 - acc: 0.9996 - val_loss: 0.1201 - val_acc: 0.9810
+Epoch 27/40
+400/400 [==============================] - 354s 885ms/step - loss: 6.8075e-04 - acc: 0.9997 - val_loss: 0.1224 - val_acc: 0.9810
+Epoch 28/40
+400/400 [==============================] - 361s 903ms/step - loss: 9.8669e-04 - acc: 0.9996 - val_loss: 0.1224 - val_acc: 0.9816
+Epoch 29/40
+400/400 [==============================] - 372s 929ms/step - loss: 6.6926e-04 - acc: 0.9998 - val_loss: 0.1223 - val_acc: 0.9822
+Epoch 30/40
+400/400 [==============================] - 367s 918ms/step - loss: 0.0010 - acc: 0.9997 - val_loss: 0.1254 - val_acc: 0.9806
+Epoch 31/40
+400/400 [==============================] - 383s 958ms/step - loss: 8.7595e-04 - acc: 0.9997 - val_loss: 0.1231 - val_acc: 0.9820
+Epoch 32/40
+400/400 [==============================] - 364s 910ms/step - loss: 0.0011 - acc: 0.9997 - val_loss: 0.1263 - val_acc: 0.9814
+Epoch 33/40
+400/400 [==============================] - 378s 944ms/step - loss: 7.5971e-04 - acc: 0.9999 - val_loss: 0.1235 - val_acc: 0.9820
+Epoch 34/40
+400/400 [==============================] - 375s 937ms/step - loss: 8.7099e-04 - acc: 0.9998 - val_loss: 0.1225 - val_acc: 0.9824
+Epoch 35/40
+400/400 [==============================] - 368s 919ms/step - loss: 8.9800e-04 - acc: 0.9997 - val_loss: 0.1224 - val_acc: 0.9822
+Epoch 36/40
+400/400 [==============================] - 375s 937ms/step - loss: 6.1313e-04 - acc: 0.9998 - val_loss: 0.1226 - val_acc: 0.9820
+Epoch 37/40
+400/400 [==============================] - 368s 920ms/step - loss: 8.5613e-04 - acc: 0.9998 - val_loss: 0.1248 - val_acc: 0.9822
+Epoch 38/40
+400/400 [==============================] - 369s 922ms/step - loss: 6.5645e-04 - acc: 0.9998 - val_loss: 0.1245 - val_acc: 0.9822
+Epoch 39/40
+400/400 [==============================] - 372s 931ms/step - loss: 7.2797e-04 - acc: 0.9998 - val_loss: 0.1252 - val_acc: 0.9822
+Epoch 40/40
+400/400 [==============================] - 369s 922ms/step - loss: 8.9512e-04 - acc: 0.9997 - val_loss: 0.1247 - val_acc: 0.9818
+Found 5000 images belonging to 2 classes.
+100/100 [==============================] - 13s 133ms/step
+No of errors = 91/5000
+D:\anaconda3\lib\site-packages\matplotlib\pyplot.py:537: RuntimeWarning: More than 20 figures have been opened. Figures created through the pyplot interface (`matplotlib.pyplot.figure`) are retained until explicitly closed and may consume too much memory. (To contr
+ol this warning, see the rcParam `figure.max_open_warning`).
+  max_open_warning, RuntimeWarning)

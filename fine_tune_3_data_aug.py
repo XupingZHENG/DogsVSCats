@@ -3,10 +3,14 @@ import numpy as np
 import matplotlib.pyplot as plt
 import keras
 from keras.preprocessing.image import ImageDataGenerator, load_img
+from keras import callbacks
 
 train_dir = './total/train'
 validation_dir = './total/val'
+save_dir = './result-sgd'
 image_size = 224
+
+os.makedirs(save_dir, exist_ok=True)
 
 from keras.applications import VGG16
 
@@ -75,10 +79,20 @@ print('validation_generator\'s class indices:')
 print(validation_generator.class_indices)
 # exit()
 
+# Select optimizer
+sgd = optimizers.SGD(lr=0.001, decay=1e-4, momentum=0.9, nesterov=True)
+rms_prop = optimizers.RMSprop(lr=1e-4)
+
 # Compile the model
 model.compile(loss='categorical_crossentropy',
-              optimizer=optimizers.RMSprop(lr=1e-4),
+              optimizer=sgd,
               metrics=['acc'])
+
+# Add callbacks
+save_model_cb = callbacks.ModelCheckpoint(os.path.join(save_dir, '{epoch:02d}.hdf5'), save_best_only=True, verbose=0)
+log_cb = callbacks.CSVLogger(os.path.join(save_dir, 'log.csv'), append=True, separator=';')
+reduce_lr_cb = callbacks.ReduceLROnPlateau(monitor='val_loss', factor=0.5, patience=4)
+cbs = [save_model_cb, log_cb, reduce_lr_cb]
 
 # Train the Model
 # NOTE that we have multiplied the steps_per_epoch by 2. This is because we are using data augmentation.
@@ -88,10 +102,11 @@ history = model.fit_generator(
       epochs=40,
       validation_data=validation_generator,
       validation_steps=validation_generator.samples/validation_generator.batch_size,
-      verbose=1)
+      verbose=1,
+      callbacks=cbs)
 
 # Save the Model
-model.save('total_da_last4_layers.h5')
+model.save(os.path.join(save_dir, 'total_da_last4_layers.h5'))
 
 # Plot the accuracy and loss curves
 acc = history.history['acc']
@@ -143,8 +158,8 @@ predicted_classes = np.argmax(predictions, axis=1)
 errors = np.where(predicted_classes != ground_truth)[0]
 print("No of errors = {}/{}".format(len(errors), validation_generator.samples))
 
-error_dir = 'error'
-os.makedirs(error_dir)
+error_dir = os.path.join(save_dir, 'error')
+os.makedirs(error_dir, exist_ok=True)
 # Show the errors
 for i in range(len(errors)):
     pred_class = np.argmax(predictions[errors[i]])
